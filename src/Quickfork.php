@@ -69,6 +69,7 @@ class Quickfork
 
     /**
      * @param Task[] $tasks
+     * @return array<string, TaskResult>
      */
     public function runTasksInThreads(array $tasks, int $maxConcurrent = 4): array
     {
