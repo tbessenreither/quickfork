@@ -1,0 +1,32 @@
+{
+    "name": "tbessenreither/quickfork",
+    "description": " Lightweight php PCNTL wrapper with IPC plus threadded runner with worker pool ",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Tobias Bessenreither"
+        }
+    ],
+    "require": {
+        "php": "^8.0"
+    },
+    "require-dev": {},
+    "autoload": {
+        "psr-4": {
+            "Tbessenreither\\QuickFork\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tbessenreither\\QuickFork\\Tests\\": "tests/"
+        }
+    },
+    "scripts": {},
+    "minimum-stability": "stable",
+    "prefer-stable": true,
+    "config": {
+        "platform": {
+            "php": "8.0.0"
+        }
+    }
+}
