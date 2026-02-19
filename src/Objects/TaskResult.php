@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Tbessenreither\QuickFork\Objects;
+namespace Tbessenreither\Quickfork\Objects;
 
 use Throwable;
 

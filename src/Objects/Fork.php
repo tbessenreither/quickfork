@@ -1,10 +1,10 @@
 <?php declare(strict_types=1);
 
-namespace Tbessenreither\QuickFork\Objects;
+namespace Tbessenreither\Quickfork\Objects;
 
-use Tbessenreither\QuickFork\Objects\Socket\Message;
-use Tbessenreither\QuickFork\Objects\Socket\Socket;
-use Tbessenreither\QuickFork\Exceptions\TimeoutException;
+use Tbessenreither\Quickfork\Objects\Socket\Message;
+use Tbessenreither\Quickfork\Objects\Socket\Socket;
+use Tbessenreither\Quickfork\Exceptions\TimeoutException;
 use InvalidArgumentException;
 use RuntimeException;
 use Throwable;

@@ -1,19 +1,19 @@
 <?php declare(strict_types=1);
 
-namespace Tbessenreither\QuickFork;
+namespace Tbessenreither\Quickfork;
 
-use Tbessenreither\QuickFork\Objects\Socket\Message;
-use Tbessenreither\QuickFork\Objects\Socket\Socket;
-use Tbessenreither\QuickFork\Objects\Fork;
-use Tbessenreither\QuickFork\Objects\Task;
-use Tbessenreither\QuickFork\Objects\TaskResult;
-use Tbessenreither\QuickFork\Objects\ThreadTaskBuffer;
-use Tbessenreither\QuickFork\Exceptions\ParallelRunException;
+use Tbessenreither\Quickfork\Objects\Socket\Message;
+use Tbessenreither\Quickfork\Objects\Socket\Socket;
+use Tbessenreither\Quickfork\Objects\Fork;
+use Tbessenreither\Quickfork\Objects\Task;
+use Tbessenreither\Quickfork\Objects\TaskResult;
+use Tbessenreither\Quickfork\Objects\ThreadTaskBuffer;
+use Tbessenreither\Quickfork\Exceptions\ParallelRunException;
 use InvalidArgumentException;
 use Throwable;
 
 
-class QuickFork
+class Quickfork
 {
     private const int DEFAULT_IDLE_PAUSE_MICROSECONDS = 100 * 1000;
 

@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Tbessenreither\QuickFork\Exceptions;
+namespace Tbessenreither\Quickfork\Exceptions;
 
 use RuntimeException;
 

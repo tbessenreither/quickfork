@@ -13,12 +13,12 @@
     "require-dev": {},
     "autoload": {
         "psr-4": {
-            "Tbessenreither\\QuickFork\\": "src/"
+            "Tbessenreither\\Quickfork\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Tbessenreither\\QuickFork\\Tests\\": "tests/"
+            "Tbessenreither\\Quickfork\\Tests\\": "tests/"
         }
     },
     "scripts": {},
