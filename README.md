@@ -137,6 +137,21 @@ We create a single task that will run the `taskHandler` method. Then the followi
 7. The `taskHandler` will receive the `shutdown` message and exit the loop.
     - This will cause Quickfork to trigger the `fork_output`, `fork_result` and `fork_complete` messages, which will be printed out by the parent process.
 
+```mermaid
+sequenceDiagram
+    Parent-->>+Fork: creates
+    Fork->>Parent: fork_start (null)
+    Fork->>+Parent: ready_for_task (null)
+    loop 5 times
+    Parent->>+Fork: new_task (sum: [a, b])
+    Fork->>-Parent: thread_result (sum)
+    end
+    Parent-->>Fork: shutdown
+    Fork-->>Parent: fork_output (ob contents)
+    Fork-->>Parent: fork_result (return value)
+    Fork-->>Parent: fork_complete (null)
+
+```
 
 ```php
 class QuickforkCommand extends Command
