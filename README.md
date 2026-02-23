@@ -140,7 +140,7 @@ We create a single task that will run the `taskHandler` method. Then the followi
 ```mermaid
 sequenceDiagram
     Parent-->>+Fork: creates
-    Fork->>Parent: fork_start (null)
+    Fork-->>Parent: fork_start (null)
     Fork->>+Parent: ready_for_task (null)
     loop 5 times
     Parent->>+Fork: new_task (sum: [a, b])
@@ -149,7 +149,7 @@ sequenceDiagram
     Parent-->>Fork: shutdown
     Fork-->>Parent: fork_output (ob contents)
     Fork-->>Parent: fork_result (return value)
-    Fork-->>Parent: fork_complete (null)
+    Fork-->>-Parent: fork_complete (null)
 
 ```
 
