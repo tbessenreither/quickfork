@@ -10,6 +10,7 @@ use Tbessenreither\Quickfork\Objects\TaskResult;
 use Tbessenreither\Quickfork\Objects\ThreadTaskBuffer;
 use Tbessenreither\Quickfork\Exceptions\ParallelRunException;
 use InvalidArgumentException;
+use Tbessenreither\Quickfork\Service\ExponentialBackoff;
 use Throwable;
 
 
@@ -73,6 +74,9 @@ class Quickfork
      */
     public function runTasksInThreads(array $tasks, int $maxConcurrent = 4): array
     {
+        $backoff = new ExponentialBackoff(
+            maxSleepTimeMs: 1000,
+        );
         try {
             foreach ($tasks as $task) {
                 if (!$task instanceof Task) {
@@ -98,10 +102,12 @@ class Quickfork
 
             // Wait for remaining forks to finish
             while (!empty($tasks)) {
-                usleep(self::DEFAULT_IDLE_PAUSE_MICROSECONDS / 2);
+                $resetBackoff = false;
                 foreach ($workerThreads as $workerThread) {
                     $messages = $workerThread->getSocket()->getMessages(topic: 'ready_for_task');
                     foreach ($messages as $message) {
+                        $resetBackoff = true;
+
                         if (empty($tasks)) {
                             break 2;
                         }
@@ -117,6 +123,8 @@ class Quickfork
                     }
                     $messages = $workerThread->getSocket()->getMessages(topic: 'fork_error');
                     foreach ($messages as $message) {
+                        $resetBackoff = true;
+
                         $error = $message->getContent();
                         $forkId = $message->getForkId();
                         unset($workerThreads[$forkId]);
@@ -126,7 +134,12 @@ class Quickfork
                         }
                     }
                 }
-                usleep(self::DEFAULT_IDLE_PAUSE_MICROSECONDS / 2);
+
+                if ($resetBackoff) {
+                    $backoff->reset();
+                } else {
+                    $backoff->sleep();
+                }
             }
 
             foreach ($workerThreads as $workerThread) {
@@ -160,13 +173,20 @@ class Quickfork
 
     private function runThreadsWorker(Fork $fork): void
     {
+        $backoff = new ExponentialBackoff(
+            maxSleepTimeMs: 1000,
+        );
         $fork->getSocket()->send(new Message(
             topic: 'ready_for_task',
         ));
         $active = true;
         while ($active) {
+            $resetBackoff = false;
+
             $messages = $fork->getSocket()->getMessages();
             foreach ($messages as $message) {
+                $resetBackoff = true;
+
                 if ($message->getTopic() === 'new_task') {
                     $taskId = $message->getContent()['taskId'];
 
@@ -205,7 +225,11 @@ class Quickfork
                     return;
                 }
             }
-            usleep(self::DEFAULT_IDLE_PAUSE_MICROSECONDS);
+            if (!$resetBackoff) {
+                $backoff->reset();
+            } else {
+                $backoff->sleep();
+            }
         }
     }
 
