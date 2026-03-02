@@ -14,21 +14,6 @@ It is designed to be easy to use and to integrate into existing projects.
 
 You can install Quickfork via Composer.
 
-First you need to add the repository to your composer.json:
-
-```json
-{
-	"repositories": [
-		{
-			"type": "vcs",
-			"url": "https://github.com/tbessenreither/quickfork"
-		}
-	]
-}
-```
-
-Then you can require the package:
-
 ```bash
 # For the latest stable version
 composer require tbessenreither/quickfork
