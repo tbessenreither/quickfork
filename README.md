@@ -126,8 +126,8 @@ We create a single task that will run the `taskHandler` method. Then the followi
 sequenceDiagram
     Parent-->>+Fork: creates
     Fork-->>Parent: fork_start (null)
-    Fork->>+Parent: ready_for_task (null)
     loop 5 times
+    Fork->>+Parent: ready_for_task (null)
     Parent->>+Fork: new_task (sum: [a, b])
     Fork->>-Parent: thread_result (sum)
     end
