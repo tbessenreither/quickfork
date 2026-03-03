@@ -99,7 +99,9 @@ class Socket
             if (empty($part)) {
                 continue;
             }
-            $this->messageBuffer[] = Message::fromString($part);
+            $message = Message::fromString($part);
+            $message->setupReplyHandler(handler: [$this, 'send']);
+            $this->messageBuffer[] = $message;
         }
     }
 

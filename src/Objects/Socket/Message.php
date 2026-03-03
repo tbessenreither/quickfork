@@ -3,11 +3,13 @@
 namespace Tbessenreither\Quickfork\Objects\Socket;
 
 use InvalidArgumentException;
+use RuntimeException;
 
 
 class Message
 {
     private string $id;
+    private mixed $replyHandler = null;
 
     public function __construct(
         private string $topic,
@@ -60,9 +62,35 @@ class Message
         return $this->id;
     }
 
+    public function setReplyTo(string $replyTo): void
+    {
+        $this->replyTo = $replyTo;
+    }
+
     public function getReplyTo(): ?string
     {
         return $this->replyTo;
+    }
+
+    public function setupReplyHandler(callable $handler): void
+    {
+        if ($this->replyHandler !== null) {
+            throw new RuntimeException('Reply handler can only be set up once per message.');
+        }
+
+        $this->replyHandler = $handler;
+    }
+
+    public function reply(Message $message): void
+    {
+        if ($this->replyHandler === null) {
+            throw new RuntimeException('No reply handler set up for this message.');
+        }
+
+        $message->setReplyTo($this->getId());
+
+        $handler = $this->replyHandler;
+        $handler($message);
     }
 
 }
